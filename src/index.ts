@@ -3,6 +3,8 @@ import authRoutes from "./userAuth/userAuth.route.js";
 import mongoose from "mongoose";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import dotenv from "dotenv";
+dotenv.config();
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -22,7 +24,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "http://localhost:5000",
+      url: `${process.env.NODE_ENV} === "production" ? ${process.env.API_URL} : "http://localhost:5000"}`,
       description: "Development server",
     },
   ],
@@ -38,15 +40,13 @@ const swaggerSpec = swaggerJSDoc(options);
 
 const app = express();
 
-
 app.use(express.json());
 
-// const uri = "mongodb://127.0.0.1:27017/sms";
-const uri = "mongodb+srv://victor:aGszzXRbbBOvYV8H@sms.snqim3h.mongodb.net/?retryWrites=true&w=majority&appName=sms"
+const uri = process.env.DATABASE_URL as string;
+const PORT = process.env.PORT || 5000;
 
 app.use("/api/auth", authRoutes);
 
-const PORT = process.env.PORT || 5000;
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(PORT, () => {

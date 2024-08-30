@@ -2,8 +2,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User, { IUser } from "../userAuth/userAuth.model.js";
 import { sendEmail } from "../utils/email.js";
-import { ValidationError, DatabaseError } from "../errorSchema/ErrorSchema.js";
-
+import { ValidationError } from "../errorSchema/ErrorSchema.js";
+import dotenv from "dotenv";
+dotenv.config();
 export class AuthService {
   async register(data: IUser) {
     try {
@@ -17,7 +18,6 @@ export class AuthService {
       const token = jwt.sign({ email: data?.email }, "secret", {
         expiresIn: 3600,
       });
-      console.log("🚀 ~ AuthService ~ register ~ token:", token);
 
       const user = new User({
         ...data,
@@ -31,7 +31,7 @@ export class AuthService {
         user.firstName,
         user.email,
         "Email Verification from Schease",
-        `http://localhost:5000/verify-email?verify_token=${user.verificationToken}`
+        `${process.env.API_URL}/verify-email%{}?verify_token=${user.verificationToken}`
       );
 
       await user.save();
@@ -89,13 +89,12 @@ export class AuthService {
       if (!user) throw new ValidationError("User not found", 404);
 
       user.resetToken = jwt.sign({ email }, "secret", { expiresIn: "1h" });
-      console.log("🚀 ~ AuthService ~ forgetPassword ~ user:", user.resetToken)
       await sendEmail(
         "forgot",
         user.firstName,
         user.email,
         "Reset your password",
-        `http://localhost:5000/reset-password?reset_token=${user.resetToken}`
+        `${process.env.API_URL}?reset_token=${user.resetToken}`
       );
     } catch (error) {
       throw error;
