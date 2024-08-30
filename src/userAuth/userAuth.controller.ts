@@ -5,14 +5,14 @@ export class UserAuth {
   private authService = new AuthService();
   register = async (req: Request, res: Response) => {
     try {
-      const { email, password } = req.body;
-      const user = await this.authService.register(email, password);
-
+      const user = await this.authService.register(req.body);
       res.status(201).json(user);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
-      res.status(400).json({ error: errorMessage });
+      if (error.status && error.message) {
+        return res.status(error.status).json({ error: error.message });
+      }
+
+      return res.status(500).json("Internal server error");
     }
   };
 
@@ -20,49 +20,60 @@ export class UserAuth {
     try {
       const { email, password } = req.body;
       const data = await this.authService.login(email, password);
-      // console.log("🚀 ~ UserAuth ~ login= ~ data:", data);
       res.json({ data });
     } catch (error) {
-      // console.log("🚀 ~ UserAuth ~ login= ~ error:", error);
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error occurred";
-      res.status(400).json({ error: errorMessage });
+      if (error.status && error.message) {
+        return res.status(error.status).json({ error: error.message });
+      }
+
+      return res.status(500).json("Internal server error");
     }
   };
 
-  // verifyEmail = async (req: Request, res: Response) => {
-  //   try {
-  //     const { token } = req.body;
-  //     const user = await this.authService.verifyEmail(token);
-  //     res.json(user);
-  //   } catch (error) {
-  //     const errorMessage =
-  //       error instanceof Error ? error.message : "Unknown error occurred";
-  //     res.status(400).json({ error: errorMessage });
-  //   }
-  // };
+  verifyEmail = async (req: Request, res: Response) => {
+    try {
+      const token = req?.query.verify_token;
+      if (!token) {
+        res.status(404).json({
+          error: "Verification Token not Found",
+        });
+      }
+      const user = await this.authService.verifyEmail(token as string);
+      res.json(user);
+    } catch (error) {
+      if (error.status && error.message) {
+        return res.status(error.status).json({ error: error.message });
+      }
 
-  // forgetPassword = async (req: Request, res: Response) => {
-  //   try {
-  //     const { email } = req.body;
-  //     await this.authService.forgetPassword(email);
-  //     res.json({ message: "Password reset link sent" });
-  //   } catch (error) {
-  //     const errorMessage =
-  //       error instanceof Error ? error.message : "Unknown error occurred";
-  //     res.status(400).json({ error: errorMessage });
-  //   }
-  // };
+      return res.status(500).json("Internal server error");
+    }
+  };
 
-  // resetPassword = async (req: Request, res: Response) => {
-  //   try {
-  //     const { token, newPassword } = req.body;
-  //     const user = await this.authService.resetPassword(token, newPassword);
-  //     res.json(user);
-  //   } catch (error) {
-  //     const errorMessage =
-  //       error instanceof Error ? error.message : "Unknown error occurred";
-  //     res.status(400).json({ error: errorMessage });
-  //   }
-  // };
+  forgetPassword = async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+      await this.authService.forgetPassword(email);
+      res.json({ message: "Password reset link sent" });
+    } catch (error) {
+      if (error.status && error.message) {
+        return res.status(error.status).json({ error: error.message });
+      }
+
+      return res.status(500).json("Internal server error");
+    }
+  };
+
+  resetPassword = async (req: Request, res: Response) => {
+    try {
+      const token = req?.query?.reset_token;
+      await this.authService.resetPassword(token, req.body?.newPassword);
+      res.status(200).json({ message: "reset successful" });
+    } catch (error) {
+      if (error.status && error.message) {
+        return res.status(error.status).json({ error: error.message });
+      }
+
+      return res.status(500).json("Internal server error");
+    }
+  };
 }

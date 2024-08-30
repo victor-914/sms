@@ -2,94 +2,121 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User, { IUser } from "../userAuth/userAuth.model.js";
 import { sendEmail } from "../utils/email.js";
+import { ValidationError, DatabaseError } from "../errorSchema/ErrorSchema.js";
 
 export class AuthService {
-  async register(email: string, password: string) {
+  async register(data: IUser) {
     try {
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(data?.password, 10);
+
+      const existingUser = await User.findOne({ email: data?.email });
+      if (existingUser) {
+        throw new ValidationError("Email already exists", 400);
+      }
+
+      const token = jwt.sign({ email: data?.email }, "secret", {
+        expiresIn: 3600,
+      });
+      console.log("🚀 ~ AuthService ~ register ~ token:", token);
+
       const user = new User({
-        email,
+        ...data,
         password: hashedPassword,
         verified: false,
-        verificationToken: jwt.sign({ email }, "secret", { expiresIn: "1h" }),
+        verificationToken: token,
       });
 
-      console.log("🚀 ~ AuthService ~ register ~ user:", user);
-
-      // await user.save();
       await sendEmail(
+        "verify",
+        user.firstName,
         user.email,
-        "Verify your email",
-        `verification link: ${user.verificationToken}`
+        "Email Verification from Schease",
+        `http://localhost:5000/verify-email?verify_token=${user.verificationToken}`
       );
 
-      return user;
+      await user.save();
+      user.password = "";
+      return {
+        user,
+        message: "Verification email sent",
+      };
     } catch (err) {
-      console.log("🚀 ~ AuthService ~ register ~ err:", err);
+      throw err;
     }
   }
 
   async login(email: string, password: string) {
     try {
       const user = await User.findOne({ email });
-      if (!user) throw new Error("User not found");
-
+      if (!user) throw new ValidationError("User not found", 404);
       const valid = await bcrypt.compare(password, user?.password);
-      if (!valid) throw new Error("Invalid password");
+      if (!valid) throw new ValidationError("Invalid password", 403);
 
-      if (!user.verified) throw new Error("Email not verified");
+      if (!user.verified) throw new ValidationError("Email not verified", 412);
 
-      const token = jwt.sign({ id: user.id, email: user.email }, "secret", {
+      const token = jwt.sign({ id: user._id, email: user.email }, "secret", {
         expiresIn: "1h",
       });
-
+      user.password = "";
       return { user, token };
     } catch (err) {
-      console.log("🚀 ~ AuthService ~ login ~ err:", err);
+      throw err;
     }
   }
 
-  // async verifyEmail(token: string) {
-  //   const payload = jwt.verify(token, "secret");
-  //   const user = await User.findOne({payload?.email});
+  async verifyEmail(token: string) {
+    try {
+      const payload = jwt.verify(token, "secret") as {
+        email: string;
+      };
+      const { email } = payload;
+      const user = await User.findOne({ email: email });
+      if (!user || user?.email !== email) {
+        if (!user) throw new ValidationError("Invalid token", 404);
+      }
 
-  //   // if(user.email !== payload.email){
-  //   //   if (!user) throw new Error("Invalid token");
-  //   // }
-  //   // const user = this.users.find((u: User) => u.email === payload.email);
+      user.verified = true;
+      user.password = "";
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 
-  // //  user && user.verified = true;
-  //   return user;
-  // }
+  async forgetPassword(email: string) {
+    try {
+      const user = await User.findOne({ email });
+      if (!user) throw new ValidationError("User not found", 404);
 
-  // async forgetPassword(email: string) {
-  //   const user = await User.findOne({ email });
-  //   if (!user) throw new Error("User not found");
+      user.resetToken = jwt.sign({ email }, "secret", { expiresIn: "1h" });
+      console.log("🚀 ~ AuthService ~ forgetPassword ~ user:", user.resetToken)
+      await sendEmail(
+        "forgot",
+        user.firstName,
+        user.email,
+        "Reset your password",
+        `http://localhost:5000/reset-password?reset_token=${user.resetToken}`
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
 
-  //   user.resetToken = jwt.sign({ email }, "secret", { expiresIn: "1h" });
-  //   await sendEmail(
-  //     user.email,
-  //     "Reset your password",
-  //     `Reset token: ${user.resetToken}`
-  //   );
+  async resetPassword(token: any, newPassword: string) {
+    try {
+     
+      const payload = jwt.verify(token, "secret") as { email: string };
+      const user = await User.findOne({ email: payload.email });
 
-  //   console.log(
-  //     user.email,
-  //     "Reset your password",
-  //     `Reset token: ${user.resetToken}`
-  //   );
-  // }
+    if (!user) throw new ValidationError("user not found", 404);
 
-  // async resetPassword(token: string, newPassword: string) {
-  //   const user = await User.findOne({ email });
-  //   const payload = jwt.verify(token, "secret") as { email: string };
-  //   const user = this.users.find((u: User) => u.email === payload.email);
+    user.password = await bcrypt.hash(newPassword, 10);
+    user.resetToken = "";
+    user.password = "";
+    return user;
+    } catch (error) {
+    }
 
-  //    if(user.)
-  //   if (!user) throw new Error("Invalid token");
-
-  //   user.password = await bcrypt.hash(newPassword, 10);
-  //   delete user.resetToken;
-  //   return user;
-  // }
+   
+  }
 }

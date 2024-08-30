@@ -10,7 +10,7 @@
  *         - email
  *         - password
  *         - schoolId
- *         - roleName
+ *         - role
  *       properties:
  *         id:
  *           type: string
@@ -45,7 +45,7 @@
  *         roleId:
  *           type: string
  *           description: The user role ID, auto-generated
- *         roleName:
+ *         role:
  *           type: string
  *           description: The user's role, such as Teacher, Student, Principal, or Staff
  *         schoolId:
@@ -81,10 +81,7 @@
  *               phoneNumber:
  *                 type: string
  *                 description: The user's phone number
- *               roleId:
- *                 type: string
- *                 description: The user role ID, auto-generated
- *               roleName:
+ *               role:
  *                 type: string
  *                 description: The user's role, such as Teacher, Student, Principal, or Staff
  *               schoolId:
@@ -118,8 +115,6 @@
  *                 type: string
  *               password:
  *                 type: string
- *               studentId:
- *                  type: string
  * 
  *     responses:
  *       200:

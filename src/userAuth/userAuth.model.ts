@@ -1,5 +1,12 @@
 import  { Schema, model } from "mongoose";
 
+export enum UserRole {
+  Student = 'STUDENT',
+  Teacher = 'TEACHER',
+  Principal = 'PRINCIPAL',
+}
+
+
 export interface IUser {
   id: string;
   firstName: string;
@@ -11,17 +18,14 @@ export interface IUser {
   accessToken:string;
   verificationToken?: string;
   phoneNumber: string;
-  roleID: string;
-  roleName: string;
-  schoolID: string;
+  role: UserRole;
+  schoolId: string;
+  resetToken: string | null;
 }
 
 const userSchema = new Schema(
   {
-    _id: {
-      type: String,
-      required: true,
-    },
+   
     firstName: {
       type: String,
       required: true,
@@ -33,7 +37,6 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -56,18 +59,18 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    roleID: {
+    role: {
+      type: String,
+      enum: Object.values(UserRole),
+      required: true,
+    },
+    schoolId: {
       type: String,
       required: true,
     },
-    roleName: {
-      type: String,
-      required: true,
-    },
-    schoolID: {
-      type: String,
-      required: true,
-    },
+    resetToken:{
+      type:String,
+    }
   },
   {
     timestamps: true,
