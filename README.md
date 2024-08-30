@@ -65,8 +65,8 @@ Entities
 
 7. student{
     student_id:"",
-    class:"",
-    performance,
+    class:[],
+    performance:[],
     subjects:[]
 
 }
@@ -80,10 +80,16 @@ Entities
             date_end,
             terms[]
         }
+        <!-- subdocument -->
     ],
-    teachers[],
-    students[studentId],
+    teachers[
+        <!-- ref ID -->
+    ],
+    students[
+        <!-- ref ID -->
+    ],
     parents[
+        <!-- ref ID -->
        name:"",
        wards:[ {
             parent_ward_id:"",

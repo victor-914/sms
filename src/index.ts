@@ -1,5 +1,5 @@
 import express from "express";
-import authRoutes from "./userAuth/userAuth.route.js";
+import authRoutes from "../src/entities/userAuth/userAuth.route";
 import mongoose from "mongoose";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -24,7 +24,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: `${process.env.NODE_ENV} === "production" ? ${process.env.API_URL} : "http://localhost:5000"}`,
+      url:  "http://localhost:4000",
       description: "Development server",
     },
   ],
@@ -33,10 +33,11 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   // Paths to files containing OpenAPI definitions
-  apis: ["./src/*/*.ts"],
+  apis: ["./src/entities/*/*.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
+
 
 const app = express();
 

@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User, { IUser } from "../userAuth/userAuth.model.js";
-import { sendEmail } from "../utils/email.js";
-import { ValidationError } from "../errorSchema/ErrorSchema.js";
+import { sendEmail } from "../../utils/email.js";
+import { ValidationError } from "../../errorSchema/ErrorSchema.js";
 import dotenv from "dotenv";
 dotenv.config();
 export class AuthService {
