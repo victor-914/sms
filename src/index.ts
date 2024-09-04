@@ -1,5 +1,5 @@
 import express from "express";
-import authRoutes from "../src/entities/userAuth/userAuth.route";
+import authRoutes from "./entities/userAuth/userAuth.route.js";
 import mongoose from "mongoose";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -32,7 +32,6 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
-  // Paths to files containing OpenAPI definitions
   apis: ["./src/entities/*/*.ts"],
 };
 
@@ -45,6 +44,8 @@ app.use(express.json());
 
 const uri = process.env.DATABASE_URL as string;
 const PORT = process.env.PORT || 5000;
+
+
 
 app.use("/api/auth", authRoutes);
 
