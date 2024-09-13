@@ -35,7 +35,6 @@ const schoolSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
       trim: true,
     },
     owner: {
@@ -178,5 +177,3 @@ const schoolSchema = new mongoose.Schema(
 
 // Export the School model
 export const School = model<ISchool>("School", schoolSchema);
-
-

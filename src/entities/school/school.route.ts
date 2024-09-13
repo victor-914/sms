@@ -3,12 +3,12 @@ import { SchoolController } from "./school.controller";
 
 const router = Router();
 
-const schoolConroller = new SchoolController();
+const schoolController = new SchoolController();
 
-router.get("/schools", schoolConroller.getSchools);
-router.get("/schools/:id", schoolConroller.getSchoolById);
-router.post("/schools/create", schoolConroller.createSchool);
-router.put("/schools/update/:id", schoolConroller.updateSchool);
-router.delete("schools/del/:id", schoolConroller.deleteSchool);
+router.get("/schools", schoolController.getSchools);
+router.get("/schools/:id", schoolController.getSchoolById);
+router.post("/schools", schoolController.createSchool);
+router.put("/schools/:id", schoolController.updateSchool);
+router.delete("/schools/:id", schoolController.deleteSchool);
 
 export default router;

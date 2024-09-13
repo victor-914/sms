@@ -49,7 +49,7 @@ const PORT = process.env.PORT || 5000;
 
 
 app.use("/api/auth", authRoutes);
-app.use("/api/core",schoolRoutes);
+app.use("/api/core", schoolRoutes);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

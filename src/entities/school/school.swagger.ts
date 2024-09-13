@@ -74,70 +74,16 @@
  *             province:
  *               type: string
  *               description: Province of the country
- *               example: Illinois
  *         companyRegistrationId:
  *           type: string
  *           description: Registration ID of the school
- *           example: '1234567890'
  *         phoneNumber:
  *           type: string
  *           description: Contact phone number of the school
- *           example: '+1-555-6789'
  *         email:
  *           type: string
  *           description: Email address of the school
  *           format: email
- *           example: 'info@greenvalleyhigh.edu'
- *         classes:
- *           type: array
- *           items:
- *             type: string
- *           description: References to the school's classes
- *           example: ['64f637bd9e752ed229c2a46e', '64f637bd9e752ed229c2a46f']
- *         sessions:
- *           type: array
- *           items:
- *             type: string
- *           description: References to the school's sessions
- *           example: ['64f637bd9e752ed229c2a470']
- *         terms:
- *           type: array
- *           items:
- *             type: string
- *           description: References to the school's terms
- *           example: ['64f637bd9e752ed229c2a471']
- *         gradeFormat:
- *           type: string
- *           description: Reference to the grade format of the school
- *           example: '64f637bd9e752ed229c2a472'
- *         assessmentFormat:
- *           type: string
- *           description: Reference to the assessment format of the school
- *           example: '64f637bd9e752ed229c2a473'
- *         staff:
- *           type: array
- *           items:
- *             type: string
- *           description: References to the school's staff
- *           example: ['64f637bd9e752ed229c2a474']
- *         teachers:
- *           type: array
- *           items:
- *             type: string
- *           description: References to the school's teachers
- *           example: ['64f637bd9e752ed229c2a475']
- *         students:
- *           type: array
- *           items:
- *             type: string
- *           description: References to the school's students
- *           example: ['64f637bd9e752ed229c2a476']
- *         principals:
- *           type: array
- *           items:
- *             type: string
- *           description: References to the school's principals
- *           example: ['64f637bd9e752ed229c2a477']
  */
 
 /**

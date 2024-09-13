@@ -1,8 +1,8 @@
+import { StringSchemaDefinition } from "mongoose";
 import { ValidationError } from "../../errorSchema/ErrorSchema";
 import { ISchool, School } from "./school.model";
 
 export class SchoolService {
-  // Create a new school
   async create(data: ISchool): Promise<ISchool> {
     try {
       const school = new School(data);
@@ -12,7 +12,6 @@ export class SchoolService {
     }
   }
 
-  // Get all schools
   async getAll(): Promise<ISchool[]> {
     try {
       return await School.find();
@@ -21,7 +20,6 @@ export class SchoolService {
     }
   }
 
-  // Get a school by ID
   async getById(id: string): Promise<ISchool | null> {
     try {
       const school = await School.findById(id);
@@ -34,7 +32,6 @@ export class SchoolService {
     }
   }
 
-  // Update a school by ID
   async update(id: string, data: Partial<ISchool>): Promise<ISchool | null> {
     try {
       const updatedSchool = await School.findByIdAndUpdate(id, data, {
@@ -49,15 +46,18 @@ export class SchoolService {
     }
   }
 
-  // Delete a school by ID
-  async delete(id: string): Promise<void> {
+  async delete(id: string): Promise<String> {
     try {
       const result = await School.findByIdAndDelete(id);
       if (!result) {
-        throw new ValidationError("Internal server error: ", 500);
+        throw new ValidationError("school resource not found", 404);
       }
+
+      const message = `school ${id} resource deleted`;
+
+      return message;
     } catch (error) {
-      throw new ValidationError("Internal server error: ", 500);
+      throw error;
     }
   }
 }

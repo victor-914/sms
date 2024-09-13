@@ -4,7 +4,6 @@ import User, { IUser } from "./userAuth.model.js";
 import { sendEmail } from "../../utils/email.js";
 import { ValidationError } from "../../errorSchema/ErrorSchema.js";
 import dotenv from "dotenv";
-import Principal from "../principal/principal.model.js";
 
 dotenv.config();
 export class AuthService {
@@ -133,6 +132,8 @@ export class AuthService {
       user.resetToken = "";
       user.password = "";
       return user;
-    } catch (error) {}
+    } catch (error) {
+      throw error
+    }
   }
 }
