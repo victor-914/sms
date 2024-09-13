@@ -1,9 +1,9 @@
-import  { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 export enum UserRole {
-  Student = 'STUDENT',
-  Teacher = 'TEACHER',
-  Principal = 'PRINCIPAL',
+  Student = "STUDENT",
+  Teacher = "TEACHER",
+  Principal = "PRINCIPAL",
 }
 
 
@@ -15,17 +15,26 @@ export interface IUser {
   password: string;
   verified: boolean;
   refreshToken?: string;
-  accessToken:string;
+  accessToken: string;
   verificationToken?: string;
   phoneNumber: string;
-  role: UserRole;
   schoolId: string;
   resetToken: string | null;
+  roleId: string;
+  role: UserRole;
+  gender: { type: String, enum: ['Male', 'Female'], required: true },
+  address: {
+    street: String,
+    city: String,
+    state: String,
+    postalCode: String,
+    country: String
+  },
+
 }
 
 const userSchema = new Schema(
   {
-   
     firstName: {
       type: String,
       required: true,
@@ -59,18 +68,31 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    roleId: {
+      type: Schema.Types.ObjectId,
+      refPath: "role",
+      required: true,
+    },
     role: {
       type: String,
       enum: Object.values(UserRole),
       required: true,
     },
     schoolId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref:"School",
       required: true,
     },
-    resetToken:{
-      type:String,
-    }
+    resetToken: {
+      type: String,
+    },
+    address: {
+      street: String,
+      city: String,
+      state: String,
+      postalCode: String,
+      country: String
+    },
   },
   {
     timestamps: true,

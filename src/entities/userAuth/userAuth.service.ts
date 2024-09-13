@@ -4,11 +4,32 @@ import User, { IUser } from "./userAuth.model.js";
 import { sendEmail } from "../../utils/email.js";
 import { ValidationError } from "../../errorSchema/ErrorSchema.js";
 import dotenv from "dotenv";
+import Principal from "../principal/principal.model.js";
+
 dotenv.config();
 export class AuthService {
   async register(data: IUser) {
     try {
       const hashedPassword = await bcrypt.hash(data?.password, 10);
+
+      
+      // const createRole = async (
+      //   schoolId: string
+      // ) => {
+      //   console.log(data.role)
+      //   if (data.role === "PRINCIPAL") {
+      //       const principal = new Principal({
+      //         schoolId,
+      //       });
+
+      //       await principal.save();
+      //       return principal;
+      //   }
+      // };
+
+      // const schoolId = "jdhdhjwkwhksw";
+      // const role = await createRole(schoolId);
+      // console.log("🚀 ~ AuthService ~ register ~ role:", role);
 
       const existingUser = await User.findOne({ email: data?.email });
       if (existingUser) {
@@ -31,7 +52,7 @@ export class AuthService {
         user.firstName,
         user.email,
         "Email Verification from Schease",
-        `${process.env.API_URL}/verify-email%{}?verify_token=${user.verificationToken}`
+        `${process.env.API_URL}/verify-email?verify_token=${user.verificationToken}`
       );
 
       await user.save();
@@ -103,19 +124,15 @@ export class AuthService {
 
   async resetPassword(token: any, newPassword: string) {
     try {
-     
       const payload = jwt.verify(token, "secret") as { email: string };
       const user = await User.findOne({ email: payload.email });
 
-    if (!user) throw new ValidationError("user not found", 404);
+      if (!user) throw new ValidationError("user not found", 404);
 
-    user.password = await bcrypt.hash(newPassword, 10);
-    user.resetToken = "";
-    user.password = "";
-    return user;
-    } catch (error) {
-    }
-
-   
+      user.password = await bcrypt.hash(newPassword, 10);
+      user.resetToken = "";
+      user.password = "";
+      return user;
+    } catch (error) {}
   }
 }

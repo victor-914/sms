@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import dotenv from "dotenv";
+import schoolRoutes from "./entities/school/school.route.js"
 dotenv.config();
 
 const swaggerDefinition = {
@@ -48,6 +49,7 @@ const PORT = process.env.PORT || 5000;
 
 
 app.use("/api/auth", authRoutes);
+app.use("/api/core",schoolRoutes);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

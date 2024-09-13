@@ -1,8 +1,11 @@
 const principalSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    school: { type: mongoose.Schema.Types.ObjectId, ref: 'School', required: true },
-    experience: { type: Number, required: true }
-  });
-  
-  const Principal = mongoose.model('Principal', principalSchema);
-  
+  // _id: { type: mongoose.Schema.Types.ObjectId },
+  schoolId: { type: String,   ref: "School" },
+  // userId: { type: String, unique: true,  ref: "User" },
+  // staffManaged: [{ type: mongoose.Schema.Types.ObjectId, ref: "Staff" }],
+  // teachersManaged: [{ type: mongoose.Schema.Types.ObjectId, ref: "Teacher" }],
+});
+
+const Principal = mongoose.model("Principal", principalSchema);
+
+export default Principal;
