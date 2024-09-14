@@ -1,11 +1,14 @@
-"use strict";
-// const principalSchema = new mongoose.Schema({
-//   // _id: { type: mongoose.Schema.Types.ObjectId },
-//   schoolId: { type: String,   ref: "School" },
-//   // userId: { type: String, unique: true,  ref: "User" },
-//   // staffManaged: [{ type: mongoose.Schema.Types.ObjectId, ref: "Staff" }],
-//   // teachersManaged: [{ type: mongoose.Schema.Types.ObjectId, ref: "Teacher" }],
-// });
-// const Principal = mongoose.model("Principal", principalSchema);
-// export default Principal;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJpbmNpcGFsLm1vZGVsLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2VudGl0aWVzL3ByaW5jaXBhbC9wcmluY2lwYWwubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLGdEQUFnRDtBQUNoRCxzREFBc0Q7QUFDdEQsaURBQWlEO0FBQ2pELDZEQUE2RDtBQUM3RCwrRUFBK0U7QUFDL0Usb0ZBQW9GO0FBQ3BGLE1BQU07QUFFTixrRUFBa0U7QUFFbEUsNEJBQTRCIn0=
+import mongoose from "mongoose";
+const principalSchema = new mongoose.Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId },
+    schoolId: { type: String, ref: "School" },
+    userId: { type: String, unique: true, ref: "User" },
+    staffManaged: [{ type: mongoose.Schema.Types.ObjectId, ref: "Staff" }],
+    teachersManaged: [{ type: mongoose.Schema.Types.ObjectId, ref: "Teacher" }],
+});
+const Principal = mongoose.model("Principal", principalSchema);
+export default Principal;
+// how to create a principal 
+// 1. register as user. role as principal with school id 
+// 2. 
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJpbmNpcGFsLm1vZGVsLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2VudGl0aWVzL3ByaW5jaXBhbC9wcmluY2lwYWwubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxRQUFRLE1BQU0sVUFBVSxDQUFDO0FBRWhDLE1BQU0sZUFBZSxHQUFHLElBQUksUUFBUSxDQUFDLE1BQU0sQ0FBQztJQUMxQyxHQUFHLEVBQUUsRUFBRSxJQUFJLEVBQUUsUUFBUSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsUUFBUSxFQUFFO0lBQzdDLFFBQVEsRUFBRSxFQUFFLElBQUksRUFBRSxNQUFNLEVBQUksR0FBRyxFQUFFLFFBQVEsRUFBRTtJQUMzQyxNQUFNLEVBQUUsRUFBRSxJQUFJLEVBQUUsTUFBTSxFQUFFLE1BQU0sRUFBRSxJQUFJLEVBQUcsR0FBRyxFQUFFLE1BQU0sRUFBRTtJQUNwRCxZQUFZLEVBQUUsQ0FBQyxFQUFFLElBQUksRUFBRSxRQUFRLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxRQUFRLEVBQUUsR0FBRyxFQUFFLE9BQU8sRUFBRSxDQUFDO0lBQ3RFLGVBQWUsRUFBRSxDQUFDLEVBQUUsSUFBSSxFQUFFLFFBQVEsQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLFFBQVEsRUFBRSxHQUFHLEVBQUUsU0FBUyxFQUFFLENBQUM7Q0FDNUUsQ0FBQyxDQUFDO0FBRUgsTUFBTSxTQUFTLEdBQUcsUUFBUSxDQUFDLEtBQUssQ0FBQyxXQUFXLEVBQUUsZUFBZSxDQUFDLENBQUM7QUFFL0QsZUFBZSxTQUFTLENBQUM7QUFHekIsNkJBQTZCO0FBQzdCLHlEQUF5RDtBQUN6RCxNQUFNIn0=

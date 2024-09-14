@@ -1,6 +1,5 @@
-import { StringSchemaDefinition } from "mongoose";
-import { ValidationError } from "../../errorSchema/ErrorSchema";
-import { ISchool, School } from "./school.model";
+import { ValidationError } from "../../errorSchema/ErrorSchema.js";
+import { ISchool, School } from "./school.model.js";
 
 export class SchoolService {
   async create(data: ISchool): Promise<ISchool> {

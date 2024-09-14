@@ -4,31 +4,16 @@ import User, { IUser } from "./userAuth.model.js";
 import { sendEmail } from "../../utils/email.js";
 import { ValidationError } from "../../errorSchema/ErrorSchema.js";
 import dotenv from "dotenv";
-
+import Teacher from "../teacher/teacher.model.js";
+import Student from "../student/student.model.js";
+import Staff from "../staff/staff.model.js";
+import { createUserAndRole } from "../../helperFunctions/role.helper.js";
+import Principal from "../principal/principal.model.js";
 dotenv.config();
 export class AuthService {
   async register(data: IUser) {
     try {
       const hashedPassword = await bcrypt.hash(data?.password, 10);
-
-      
-      // const createRole = async (
-      //   schoolId: string
-      // ) => {
-      //   console.log(data.role)
-      //   if (data.role === "PRINCIPAL") {
-      //       const principal = new Principal({
-      //         schoolId,
-      //       });
-
-      //       await principal.save();
-      //       return principal;
-      //   }
-      // };
-
-      // const schoolId = "jdhdhjwkwhksw";
-      // const role = await createRole(schoolId);
-      // console.log("🚀 ~ AuthService ~ register ~ role:", role);
 
       const existingUser = await User.findOne({ email: data?.email });
       if (existingUser) {
@@ -39,12 +24,44 @@ export class AuthService {
         expiresIn: 3600,
       });
 
-      const user = new User({
+      // create user
+      let user = new User({
         ...data,
         password: hashedPassword,
         verified: false,
         verificationToken: token,
+        schoolId: data.schoolId,
       });
+
+      // create staff
+      const staff = new Staff({
+        userId: user._id,
+        schoolId: data.schoolId,
+      });
+
+      // create varied role.
+      const role = await createUserAndRole(
+        data.role,
+        user._id,
+        data.schoolId,
+        staff._id
+      );
+
+      //  linking
+      user.roleId = role._id;
+      user.password = "";
+
+      // add role
+      if (data.role === "teacher" || data.role === "principal") {
+        staff.roleId = role._id;
+        user.staffId = staff._id;
+      }
+
+      await user.save();
+      await staff.save();
+      await role.save();
+
+      
 
       await sendEmail(
         "verify",
@@ -54,13 +71,12 @@ export class AuthService {
         `${process.env.API_URL}/verify-email?verify_token=${user.verificationToken}`
       );
 
-      await user.save();
-      user.password = "";
       return {
         user,
         message: "Verification email sent",
       };
     } catch (err) {
+      console.log("🚀 ~ AuthService ~ register ~ err:", err);
       throw err;
     }
   }
@@ -133,7 +149,7 @@ export class AuthService {
       user.password = "";
       return user;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

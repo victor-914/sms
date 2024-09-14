@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
 
 export enum UserRole {
-  Student = "STUDENT",
-  Teacher = "TEACHER",
-  Principal = "PRINCIPAL",
+  Student = "student",
+  Teacher = "teacher",
+  Principal = "principal",
 }
 
 
@@ -20,6 +20,7 @@ export interface IUser {
   phoneNumber: string;
   schoolId: string;
   resetToken: string | null;
+  staffId: any ;
   roleId: string;
   role: UserRole;
   gender: { type: String, enum: ['Male', 'Female'], required: true },
@@ -69,6 +70,11 @@ const userSchema = new Schema(
       required: true,
     },
     roleId: {
+      type: Schema.Types.ObjectId,
+      refPath: "role",
+      required: true,
+    },
+    staffId: {
       type: Schema.Types.ObjectId,
       refPath: "role",
       required: true,
