@@ -17,7 +17,7 @@ export const authenticationMDW = (req: CustomRequest, res: Response, next: NextF
 
   try {
     const decoded = jwt.verify(token,  process.env.JWT_SECRET as string);
-    req.user = decoded;
+    req.body.user = decoded;
     next();
   } catch (err) {
     res.status(403).json({ message: 'Invalid token.' });

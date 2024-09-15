@@ -38,6 +38,7 @@ export class AuthService {
         userId: user._id,
         schoolId: data.schoolId,
       });
+      console.log("🚀 ~ AuthService ~ register ~ staff:", staff);
 
       // create varied role.
       const role = await createUserAndRole(
@@ -47,6 +48,9 @@ export class AuthService {
         staff._id
       );
 
+      console.log(role, "role");
+
+      console.log("🚀 ~ AuthService ~ register ~ role:", role);
       //  linking
       user.roleId = role._id;
 
@@ -60,7 +64,8 @@ export class AuthService {
       await staff.save();
       await role.save();
 
-      
+      console.log("🚀 ~ AuthService ~ register ~ role:", role);
+      console.log("🚀 ~ AuthService ~ register ~ role:", role);
 
       await sendEmail(
         "verify",
@@ -77,6 +82,7 @@ export class AuthService {
         message: "Verification email sent",
       };
     } catch (err) {
+      console.log("🚀 ~ AuthService ~ register ~ err:", err);
       throw err;
     }
   }
@@ -90,9 +96,13 @@ export class AuthService {
 
       if (!user.verified) throw new ValidationError("Email not verified", 412);
 
-      const accessToken = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET as string, {
-        expiresIn: "1h",
-      });
+      const accessToken = jwt.sign(
+        user,
+        process.env.JWT_SECRET as string,
+        {
+          expiresIn: "1h",
+        }
+      );
       user.password = "";
       return { user, accessToken };
     } catch (err) {
@@ -113,8 +123,7 @@ export class AuthService {
 
       user.verified = true;
 
-      await user.save()
-      
+      await user.save();
 
       user.password = "";
       return user;
@@ -128,7 +137,9 @@ export class AuthService {
       const user = await User.findOne({ email });
       if (!user) throw new ValidationError("User not found", 404);
 
-      user.resetToken = jwt.sign({ email }, process.env.JWT_SECRET as string, { expiresIn: "1h" });
+      user.resetToken = jwt.sign({ email }, process.env.JWT_SECRET as string, {
+        expiresIn: "1h",
+      });
       await sendEmail(
         "forgot",
         user.firstName,

@@ -3,7 +3,6 @@ import Student from "../entities/student/student.model.js";
 import Teacher from "../entities/teacher/teacher.model.js";
 import Parent from "../entities/parent/parent.model.js";
 
-
 /**
  * Function to check the user type and return specific values based on the type.
  * @param {string} type - The type of the user (e.g., 'teacher', 'parent', 'student', 'principal').
@@ -17,7 +16,7 @@ export const createUserAndRole = (
 ): any => {
   const userTypeActions: { [key: string]: () => any } = {
     teacher: async () => {
-      const teacher = new Teacher({
+      const teacher =   new Teacher({
         userId: userID,
         schoolId: schoolID,
         staffId: staffID,
@@ -25,7 +24,7 @@ export const createUserAndRole = (
 
       return teacher;
     },
-    parent: () => {
+    parent: async () => {
       const parent = new Parent({
         userId: userID,
         schoolId: schoolID,
@@ -34,7 +33,7 @@ export const createUserAndRole = (
 
       return parent;
     },
-    student: () => {
+    student: async () => {
       const student = new Student({
         userId: userID,
         schoolId: schoolID,
@@ -43,16 +42,17 @@ export const createUserAndRole = (
 
       return student;
     },
-    principal: () => {
+    principal: async () => {
       const principal = new Principal({
         userId: userID,
         schoolId: schoolID,
         staffId: staffID,
       });
+      console.log("🚀 ~ principal:", principal);
 
       return principal;
     },
-    default: () => ({
+    default: async () => ({
       error: `Invalid user type: ${type}. Must be one of: teacher, parent, student, principal`,
     }),
   };
