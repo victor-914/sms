@@ -49,7 +49,6 @@ export class AuthService {
 
       //  linking
       user.roleId = role._id;
-      user.password = "";
 
       // add role
       if (data.role === "teacher" || data.role === "principal") {
@@ -71,12 +70,13 @@ export class AuthService {
         `${process.env.API_URL}/verify-email?verify_token=${user.verificationToken}`
       );
 
+      user.password = "";
+
       return {
         user,
         message: "Verification email sent",
       };
     } catch (err) {
-      console.log("🚀 ~ AuthService ~ register ~ err:", err);
       throw err;
     }
   }
@@ -90,11 +90,11 @@ export class AuthService {
 
       if (!user.verified) throw new ValidationError("Email not verified", 412);
 
-      const token = jwt.sign({ id: user._id, email: user.email }, "secret", {
+      const accessToken = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET as string, {
         expiresIn: "1h",
       });
       user.password = "";
-      return { user, token };
+      return { user, accessToken };
     } catch (err) {
       throw err;
     }
@@ -112,6 +112,10 @@ export class AuthService {
       }
 
       user.verified = true;
+
+      await user.save()
+      
+
       user.password = "";
       return user;
     } catch (error) {
@@ -124,7 +128,7 @@ export class AuthService {
       const user = await User.findOne({ email });
       if (!user) throw new ValidationError("User not found", 404);
 
-      user.resetToken = jwt.sign({ email }, "secret", { expiresIn: "1h" });
+      user.resetToken = jwt.sign({ email }, process.env.JWT_SECRET as string, { expiresIn: "1h" });
       await sendEmail(
         "forgot",
         user.firstName,
