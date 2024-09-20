@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import dotenv from "dotenv";
-import schoolRoutes from "./entities/school/school.route.js"
+import cors from "cors";
+import schoolRoutes from "./entities/school/school.route.js";
 dotenv.config();
 
 const swaggerDefinition = {
@@ -25,7 +26,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url:  "http://localhost:4000",
+      url: "http://localhost:4000",
       description: "Development server",
     },
   ],
@@ -38,15 +39,17 @@ const options = {
 
 const swaggerSpec = swaggerJSDoc(options);
 
-
 const app = express();
+const corsOptions = {
+  origin: "*",
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
 const uri = process.env.DATABASE_URL as string;
 const PORT = process.env.PORT || 5000;
-
-
 
 app.use("/api/auth", authRoutes);
 app.use("/api/core", schoolRoutes);

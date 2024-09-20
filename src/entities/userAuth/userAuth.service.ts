@@ -99,7 +99,7 @@ export class AuthService {
       const accessToken = jwt.sign(payload, process.env.JWT_SECRET as string, {
         expiresIn: "4h",
       });
-      // user.password = "";
+      user.password = "";
       return { user, accessToken };
     } catch (err) {
       throw err;
