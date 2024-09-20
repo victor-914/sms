@@ -19,6 +19,7 @@ export class UserAuth {
   login = async (req: Request, res: Response) => {
     try {
       const { email, password } = req.body;
+      console.log(req.body,"reqbody")
       const data = await this.authService.login(email, password);
       res.json({ data });
     } catch (error) {

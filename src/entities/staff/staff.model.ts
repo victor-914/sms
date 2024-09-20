@@ -26,12 +26,12 @@ export interface IStaff {
   department: string;
   salary?: number;
   staffType: StaffTypeEnum;
-  attendance: StaffAttendance[];
+  // attendance: StaffAttendance[];
   onLeave?: boolean;
   leaveDuration?: number;
   workExperience?: number;
   benefits?: string[];
-  performanceReview: StaffPerformanceReview[];
+  // performanceReview: StaffPerformanceReview[];
 }
 
 const staffSchema = new mongoose.Schema({
@@ -47,19 +47,19 @@ const staffSchema = new mongoose.Schema({
     type: String,
     enum: Object.values(StaffTypeEnum),
   },
-  attendance: [
-    {
-      date: Date,
-      status: { type: String, enum: ["Present", "Absent", "Late"] },
-    },
-  ],
+
   onLeave: { type: Boolean, default: false },
   leaveDuration: { type: Number },
   workExperience: { type: Number },
-  benefits: [{ type: String }],
-  performanceReview: [{ date: Date, remarks: String }],
+  // benefits: [{ type: String }],
 });
 
 const Staff = mongoose.model("Staff", staffSchema);
 
 export default Staff;
+
+
+// create staff 
+// 1. send token to email 
+// 2. compare token in req.body to token in database
+// 3. send revel.. error

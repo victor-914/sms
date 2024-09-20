@@ -4,11 +4,8 @@ import User, { IUser } from "./userAuth.model.js";
 import { sendEmail } from "../../utils/email.js";
 import { ValidationError } from "../../errorSchema/ErrorSchema.js";
 import dotenv from "dotenv";
-import Teacher from "../teacher/teacher.model.js";
-import Student from "../student/student.model.js";
 import Staff from "../staff/staff.model.js";
 import { createUserAndRole } from "../../helperFunctions/role.helper.js";
-import Principal from "../principal/principal.model.js";
 dotenv.config();
 export class AuthService {
   async register(data: IUser) {
@@ -38,7 +35,6 @@ export class AuthService {
         userId: user._id,
         schoolId: data.schoolId,
       });
-      console.log("🚀 ~ AuthService ~ register ~ staff:", staff);
 
       // create varied role.
       const role = await createUserAndRole(
@@ -48,10 +44,6 @@ export class AuthService {
         staff._id
       );
 
-      console.log(role, "role");
-
-      console.log("🚀 ~ AuthService ~ register ~ role:", role);
-      //  linking
       user.roleId = role._id;
 
       // add role
@@ -63,9 +55,6 @@ export class AuthService {
       await user.save();
       await staff.save();
       await role.save();
-
-      console.log("🚀 ~ AuthService ~ register ~ role:", role);
-      console.log("🚀 ~ AuthService ~ register ~ role:", role);
 
       await sendEmail(
         "verify",
@@ -82,7 +71,6 @@ export class AuthService {
         message: "Verification email sent",
       };
     } catch (err) {
-      console.log("🚀 ~ AuthService ~ register ~ err:", err);
       throw err;
     }
   }
@@ -92,18 +80,26 @@ export class AuthService {
       const user = await User.findOne({ email });
       if (!user) throw new ValidationError("User not found", 404);
       const valid = await bcrypt.compare(password, user?.password);
+
+      const payload = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        schoolId: user.schoolId,
+        id: user._id,
+        roleId: user.roleId,
+        _role: user.role,
+        staffId: user.staffId,
+      };
       if (!valid) throw new ValidationError("Invalid password", 403);
 
       if (!user.verified) throw new ValidationError("Email not verified", 412);
 
-      const accessToken = jwt.sign(
-        user,
-        process.env.JWT_SECRET as string,
-        {
-          expiresIn: "1h",
-        }
-      );
-      user.password = "";
+      const accessToken = jwt.sign(payload, process.env.JWT_SECRET as string, {
+        expiresIn: "4h",
+      });
+      // user.password = "";
       return { user, accessToken };
     } catch (err) {
       throw err;
