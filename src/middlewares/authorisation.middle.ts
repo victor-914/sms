@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 
 interface CustomRequest extends Request {
-  user?: any; // Customize this type to match your us
+  user?: any; 
 }
 
 export const authorizeRoles = (...roles: string[]) => {
   return (req: CustomRequest, res: Response, next: NextFunction) => {
-    if (!req.user || !roles.includes(req.user.role)) {
+    if (!req.body.user || !roles.includes(req.body.user._role)) {
       return res.status(403).json({ message: 'Access denied. Insufficient permissions.' });
     }
     next();

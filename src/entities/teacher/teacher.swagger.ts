@@ -31,7 +31,7 @@
 
 /**
  * @swagger
- * /api/teachers:
+ * /api/core/teachers:
  *   post:
  *     summary: Create a new teacher
  *     tags: [Teacher]
@@ -54,7 +54,7 @@
 
 /**
  * @swagger
- * /api/teachers:
+ * /api/core/teachers:
  *   get:
  *     summary: Get all teachers
  *     tags: [Teacher]
@@ -71,7 +71,7 @@
 
 /**
  * @swagger
- * /api/teachers/{id}:
+ * /api/core/teachers/{id}:
  *   get:
  *     summary: Get a teacher by ID
  *     tags: [Teacher]
@@ -94,7 +94,7 @@
  */
 /**
  * @swagger
- * /api/teachers/{id}:
+ * /api/core/teachers/{id}:
  *   put:
  *     summary: Update a teacher by ID
  *     tags: [Teacher]
@@ -126,7 +126,7 @@
 
 /**
  * @swagger
- * /api/teachers/{id}:
+ * /api/core/teachers/{id}:
  *   delete:
  *     summary: Remove a teacher by ID
  *     tags: [Teacher]

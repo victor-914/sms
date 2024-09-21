@@ -17,6 +17,8 @@ interface StaffPerformanceReview {
 }
 
 export interface IStaff {
+  email: string;
+  user: any;
   roleId: Types.ObjectId;
   userId: Types.ObjectId;
   gender: "Male" | "Female";
@@ -29,28 +31,29 @@ export interface IStaff {
   // attendance: StaffAttendance[];
   onLeave?: boolean;
   leaveDuration?: number;
-  workExperience?: number;
+  experience?: number;
+  identityToken?: string;
   benefits?: string[];
   // performanceReview: StaffPerformanceReview[];
 }
 
 const staffSchema = new mongoose.Schema({
   roleId: { type: Schema.Types.ObjectId, refPath: "Role" },
+  email: { type: String, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
   gender: { type: String, enum: ["Male", "Female"] },
   schoolId: { type: Schema.Types.ObjectId, ref: "School" },
-  dateOfBirth: { type: Date, },
+  dateOfBirth: { type: Date },
   hireDate: { type: Date, default: Date.now },
-  department: { type: String, },
+  department: { type: String },
   salary: { type: Number },
   staffType: {
     type: String,
     enum: Object.values(StaffTypeEnum),
   },
-
   onLeave: { type: Boolean, default: false },
   leaveDuration: { type: Number },
-  workExperience: { type: Number },
+  experience: { type: Number },
   // benefits: [{ type: String }],
 });
 
@@ -58,8 +61,7 @@ const Staff = mongoose.model("Staff", staffSchema);
 
 export default Staff;
 
-
-// create staff 
-// 1. send token to email 
+// create staff
+// 1. send token to email
 // 2. compare token in req.body to token in database
 // 3. send revel.. error

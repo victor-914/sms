@@ -6,6 +6,7 @@ import swaggerUi from "swagger-ui-express";
 import dotenv from "dotenv";
 import cors from "cors";
 import schoolRoutes from "./entities/school/school.route.js";
+import staffRoutes from "./entities/staff/staff.route.js"
 dotenv.config();
 
 const swaggerDefinition = {
@@ -53,6 +54,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use("/api/auth", authRoutes);
 app.use("/api/core", schoolRoutes);
+app.use("/api/core", staffRoutes);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

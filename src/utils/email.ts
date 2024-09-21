@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const generateEmailTemplate = (type:string, name:string, link:string) => {
+const generateEmailTemplate = (type: string, name: string, link: string) => {
   switch (type) {
     case "verify":
       return `
@@ -76,12 +76,54 @@ const generateEmailTemplate = (type:string, name:string, link:string) => {
   }
 };
 
-export const sendEmail = async (type:string, name:string, to:string, subject:string, link:string) => {
+export const sendEmail = async (
+  type: string,
+  name: string,
+  to: string,
+  subject: string,
+  link: string
+) => {
   const htmlContent = generateEmailTemplate(type, name, link);
 
   const mailOptions = {
     from: "okaforchineduvictornako@gmail.com",
     to,
+    subject,
+    html: htmlContent,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+export const sendStaffIdToken = async (
+  to: string,
+  subject: string,
+  token: string,
+  school: string
+) => {
+  const htmlContent = `<!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>${school}  identity token for staff registration</title>
+    </head>
+    <body>
+      <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border: 1px solid #e0e0e0;">
+      <p>Hello ${to},</p>
+        <p>Thank you for signing up for our service. Please use the token  below to register as a staff.</p>
+        <h3>
+         ${token}
+        </h3>
+        <p>If you have any questions, feel free to reply to this email. We're here to help!</p>
+        <p>Best Regards,<br />The Company Team</p>
+      </div>
+    </body>
+  </html>`;
+
+  const mailOptions = {
+    from: "okaforchineduvictornako@gmail.com",
+    to:"okaforv914@gmail.com",
     subject,
     html: htmlContent,
   };

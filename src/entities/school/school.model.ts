@@ -39,84 +39,69 @@ const schoolSchema = new mongoose.Schema(
     },
     owner: {
       type: String,
-      required: true,
       trim: true,
     },
     ownerContact: {
       phone: {
         type: String,
-        required: true,
         trim: true,
       },
       email: {
         type: String,
-        required: true,
         trim: true,
         match: [/^\S+@\S+\.\S+$/, "Please use a valid email address."],
       },
     },
     abbreviation: {
       type: String,
-      required: true,
       trim: true,
       maxlength: 10,
     },
     type: {
       type: String,
       enum: ["Public", "Private", "Charter", "International"],
-      required: true,
     },
     address: {
       street: {
         type: String,
-        required: true,
         trim: true,
       },
       city: {
         type: String,
-        required: true,
         trim: true,
       },
       state: {
         type: String,
-        required: true,
         trim: true,
       },
       postalCode: {
         type: String,
-        required: true,
         trim: true,
       },
       country: {
         type: String,
-        required: true,
         trim: true,
       },
       province: {
         type: String,
-        required: true,
         trim: true,
       },
     },
     companyRegistrationId: {
       type: String,
-      required: true,
       trim: true,
     },
     phoneNumber: {
       type: String,
-      required: true,
       trim: true,
     },
     email: {
       type: String,
-      required: true,
       trim: true,
       match: [/^\S+@\S+\.\S+$/, "Please use a valid email address."],
     },
     country: {
       type: String,
-      required: true,
       trim: true,
     },
     classes: [

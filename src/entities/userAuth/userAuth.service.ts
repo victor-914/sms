@@ -30,7 +30,7 @@ export class AuthService {
         schoolId: data.schoolId,
       });
 
-      // create staff
+      // create staff or existing staff
       const staff = new Staff({
         userId: user._id,
         schoolId: data.schoolId,

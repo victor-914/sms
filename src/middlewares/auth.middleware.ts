@@ -10,6 +10,7 @@ interface CustomRequest extends Request {
 
 export const authenticationMDW = (req: CustomRequest, res: Response, next: NextFunction) => {
   const token = req.headers.authorization
+  console.log("🚀 ~ authenticationMDW ~ token:", token)
 
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.' });
