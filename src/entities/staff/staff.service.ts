@@ -36,9 +36,6 @@ export class StaffService {
         throw new ValidationError("Invalid Email", 404);
       }
 
-      if (staff.email !== data.email) {
-        throw new ValidationError("use email submitted to Admin", 404);
-      }
 
       await sendStaffIdToken(
         staff.email,

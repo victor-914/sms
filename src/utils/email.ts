@@ -123,7 +123,7 @@ export const sendStaffIdToken = async (
 
   const mailOptions = {
     from: "okaforchineduvictornako@gmail.com",
-    to:"okaforv914@gmail.com",
+    to,
     subject,
     html: htmlContent,
   };
