@@ -76,6 +76,8 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
+    console.log("🚀 ~ AuthService ~ login ~ password:", password)
+    console.log("🚀 ~ AuthService ~ login ~ email:", email)
     try {
       const user = await User.findOne({ email });
       if (!user) throw new ValidationError("User not found", 404);
@@ -97,7 +99,7 @@ export class AuthService {
       if (!user.verified) throw new ValidationError("Email not verified", 412);
 
       const accessToken = jwt.sign(payload, process.env.JWT_SECRET as string, {
-        expiresIn: "4h",
+        expiresIn: "20h",
       });
       user.password = "";
       return { user, accessToken };

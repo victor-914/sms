@@ -9,6 +9,7 @@ interface CustomRequest extends Request {
 }
 
 export const authenticationMDW = (req: CustomRequest, res: Response, next: NextFunction) => {
+  console.log(req,"req")
   const token = req.headers.authorization
   console.log("🚀 ~ authenticationMDW ~ token:", token)
 
