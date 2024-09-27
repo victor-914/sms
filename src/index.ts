@@ -45,9 +45,10 @@ const corsOptions = {
   origin: "*",
 };
 
-app.use(cors(corsOptions));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
 
 const uri = process.env.DATABASE_URL as string;
 const PORT = process.env.PORT || 5000;
