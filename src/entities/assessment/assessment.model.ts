@@ -1,10 +1,36 @@
-// const assessmentSchema = new mongoose.Schema({
-//     title: { type: String, required: true },
-//     description: { type: String },
-//     class: { type: mongoose.Schema.Types.ObjectId, ref: 'Class', required: true },
-//     subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject', required: true },
-//     date: { type: Date, required: true }
-//   });
-  
-// const Assessment = mongoose.model('Assessment', assessmentSchema);
-  
+import mongoose, { Schema, Document } from "mongoose";
+
+interface IAssess extends Document {
+  name: string;
+  minNumber:number;
+  maxNumber:number;
+}
+
+const Assess = new Schema({
+  name: {
+    type: String,
+  },
+  minNumber: {
+    type: Number,
+  },
+  maxNumber: {
+    type: Number,
+  },
+});
+
+interface IAssessFormat {
+ schoolId:string;
+  grade: IAssess[];
+}
+
+// Grading Scale Schema
+const AssessFormatSchema: Schema = new Schema({
+  schoolId: { type: Schema.Types.ObjectId },
+  assessment: [Assess],
+});
+
+const AssessingFormat = mongoose.model<IAssessFormat>(
+  "AssessingFormat",
+  AssessFormatSchema
+);
+export default AssessingFormat;

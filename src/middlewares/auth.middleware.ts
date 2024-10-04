@@ -2,16 +2,16 @@ import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import dotenv from "dotenv"
 dotenv.config()
-const secretKey = process.env.JWT_SECRET as string;
+// const secretKey = process.env.JWT_SECRET as string;
 
 interface CustomRequest extends Request {
   user?: any; 
 }
 
 export const authenticationMDW = (req: CustomRequest, res: Response, next: NextFunction) => {
-  console.log(req,"req")
+  // console.log(req,"req")
   const token = req.headers.authorization
-  console.log("🚀 ~ authenticationMDW ~ token:", token)
+  // console.log("🚀 ~ authenticationMDW ~ token:", token)
 
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.' });

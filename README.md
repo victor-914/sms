@@ -1,129 +1,16 @@
-# sms
-
-functionalities:
-cognate_admin:
-add school,
-
-Entities 
-1. fee{
-    amount:"",
-    type:full | installment,
-    session:"",
-    modeOfPayment:"",
-    ward_id:"",
-    ward_name:"",
-    parent_id:"",
-    status: pending | approved,
-    ward_class:"",
-    date:"",
-}
-
-2. result{
+1. ONBOARDING STAGE 
+ School api  == done
+ class api  === done 
+ session api  === done
+ grades api  === done 
+ subject api === done
+ assesment ===  done
 
 
-    
-}
-
-3. staff:{
-     status:activate | deactivated,
-    stateType: academic | non-academic,
-    date_added:"",
-    phone_number:"",
-    duty_description:"",
-    }
-
-4. class{
-    title:"",
-    created:"",
-    class_teacher:"",
-    }
-
-    lesson_plan{
-    subject:"",
-    lesson_plan:"",
-        }
-
-5. announcement{
-     title:"",
-     description:"",
-     date:"",
-        }
-
-6. timeTable{
-    teacher:"",
-    time:"",
-    duration:"",
-    subject:"",
-    }
-
-    e_lib{
-    item_id:"",
-    item_type:book,etc
-
-    }
-
-
-7. student{
-    student_id:"",
-    class:[],
-    performance:[],
-    subjects:[]
-
-}
-
-8. school{
-    name:"",
-    school_url:"",
-    sessions:[
-        {
-            date_start,
-            date_end,
-            terms[]
-        }
-        <!-- subdocument -->
-    ],
-    teachers[
-        <!-- ref ID -->
-    ],
-    students[
-        <!-- ref ID -->
-    ],
-    parents[
-        <!-- ref ID -->
-       name:"",
-       wards:[ {
-            parent_ward_id:"",
-            parent_ward_name:"",
-        }],
-        feeHistory:[
-            {
-                amount:"",
-                type:full | installement,
-                session:"",
-                modeOfPayment:"",
-
-            }
-        ],
-        notification:[]
-    ],
-    <!-- staffs:[
-        {
-            status:activate | deactivated,
-            stateType: academic | non-academic,
-            date_added:"",
-        }
-    ], -->
-}
-
-User{
-
-}
+ 2. PRINCIPAL STAGE
+ Announcement 
 
 
 
 
-
-
-api endpoint
-
-api/teachers/:roleId
+ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJwcmluY2lwYWwiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJlbWFpbCI6ImJveGluZ2E0MWVkZGc3QGdtYWlsLmNvbSIsInJvbGUiOiJwcmluY2lwYWwiLCJzY2hvb2xJZCI6IjY2ZTQwODIxZTI1YjczOTA2ZmI0ZDg4MyIsImlkIjoiNjZlNzAwOGQxNjM3Y2I1MzIyZTcxMzMzIiwicm9sZUlkIjoiNjZlNzAwOGQxNjM3Y2I1MzIyZTcxMzM1IiwiX3JvbGUiOiJwcmluY2lwYWwiLCJzdGFmZklkIjoiNjZlNzAwOGQxNjM3Y2I1MzIyZTcxMzM0IiwiaWF0IjoxNzI4MDM2OTc2LCJleHAiOjE3MjgxMDg5NzZ9.jGzD6duelYr9b8hcnhGcp9R2KMGU2_OxSA6BKEc1R9k

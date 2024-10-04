@@ -5,7 +5,7 @@ const router = Router();
 
 const schoolController = new SchoolController();
 
-router.get("/schools", authenticationMDW, schoolController.getSchools);
+router.get("/schools", schoolController.getSchools);
 router.get("/schools/:id", authenticationMDW, schoolController.getSchoolById);
 router.post("/schools", authenticationMDW, schoolController.createSchool);
 router.put("/schools/:id", authenticationMDW, schoolController.updateSchool);

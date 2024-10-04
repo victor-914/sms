@@ -1,12 +1,17 @@
-// import mongoose from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-// const classSchema = new mongoose.Schema({
-//     name: { type: String, required: true },
-//     school: { type: mongoose.Schema.Types.ObjectId, ref: 'School', required: true },
-//     grade: { type: mongoose.Schema.Types.ObjectId, ref: 'Grade', required: true },
-//     students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
-//     teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Teacher' }]
-//   });
-  
-//   const Class = mongoose.model('Class', classSchema);
-  
+export interface IClass extends Document {
+  name: string;
+//   description: string;
+  schoolId: string;
+  abbr: string;
+}
+
+const ClassSchema: Schema = new Schema({
+  name: { type: String, required: true },
+  // description: { type: String },
+  schoolId: { type: Schema.Types.ObjectId },
+  abbr: { type: String },
+});
+
+export default mongoose.model<IClass>("Class", ClassSchema);
