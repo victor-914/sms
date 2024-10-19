@@ -1,8 +1,13 @@
-"use strict";
-// const sessionSchema = new mongoose.Schema({
-//     year: { type: String, required: true },  // e.g., "2024-2025"
-//     school: { type: mongoose.Schema.Types.ObjectId, ref: 'School', required: true },
-//     isActive: { type: Boolean, default: false }
-//   });
-//   const Session = mongoose.model('Session', sessionSchema);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2Vzc2lvbi5tb2RlbC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9lbnRpdGllcy9zZXNzaW9uL3Nlc3Npb24ubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDhDQUE4QztBQUM5QyxvRUFBb0U7QUFDcEUsdUZBQXVGO0FBQ3ZGLGtEQUFrRDtBQUNsRCxRQUFRO0FBRVIsOERBQThEIn0=
+import mongoose, { Schema } from "mongoose";
+const Term = new Schema({
+    name: { type: String, required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+});
+const SessionSchema = new Schema({
+    terms: [Term],
+    schoolId: { type: Schema.Types.ObjectId },
+    isActive: { type: Boolean, default: false },
+});
+export const Session = mongoose.model("Session", SessionSchema);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2Vzc2lvbi5tb2RlbC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9lbnRpdGllcy9zZXNzaW9uL3Nlc3Npb24ubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxRQUFRLEVBQUUsRUFBWSxNQUFNLEVBQUUsTUFBTSxVQUFVLENBQUM7QUFnQnRELE1BQU0sSUFBSSxHQUFXLElBQUksTUFBTSxDQUFDO0lBQzlCLElBQUksRUFBRSxFQUFFLElBQUksRUFBRSxNQUFNLEVBQUUsUUFBUSxFQUFFLElBQUksRUFBRTtJQUN0QyxTQUFTLEVBQUUsRUFBRSxJQUFJLEVBQUUsSUFBSSxFQUFFLFFBQVEsRUFBRSxJQUFJLEVBQUU7SUFDekMsT0FBTyxFQUFFLEVBQUUsSUFBSSxFQUFFLElBQUksRUFBRSxRQUFRLEVBQUUsSUFBSSxFQUFFO0NBQ3hDLENBQUMsQ0FBQztBQUVILE1BQU0sYUFBYSxHQUFXLElBQUksTUFBTSxDQUFDO0lBQ3ZDLEtBQUssRUFBRSxDQUFDLElBQUksQ0FBQztJQUNiLFFBQVEsRUFBRSxFQUFFLElBQUksRUFBRSxNQUFNLENBQUMsS0FBSyxDQUFDLFFBQVEsRUFBRTtJQUN6QyxRQUFRLEVBQUUsRUFBRSxJQUFJLEVBQUUsT0FBTyxFQUFFLE9BQU8sRUFBRSxLQUFLLEVBQUU7Q0FDNUMsQ0FBQyxDQUFDO0FBRUgsTUFBTSxDQUFDLE1BQU0sT0FBTyxHQUFHLFFBQVEsQ0FBQyxLQUFLLENBQVcsU0FBUyxFQUFFLGFBQWEsQ0FBQyxDQUFDIn0=

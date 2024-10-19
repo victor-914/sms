@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import AssessingFormatService from "./assessment.service";
+import AssessingFormatService from "./assessment.service.js";
 
 class AssessingFormatsController {
   private assessingFormat = new AssessingFormatService();

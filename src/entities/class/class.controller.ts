@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import ClassService from './class.service';
+import ClassService from './class.service.js';
 
 class ClassController {
     public async createClass(req: Request, res: Response): Promise<Response> {

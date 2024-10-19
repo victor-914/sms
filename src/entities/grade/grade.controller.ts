@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import GradeFormatService from "./grade.service";
+import GradeFormatService from "./grade.service.js";
 
 class GradingFormatsController {
   private gradeFormatService = new GradeFormatService();

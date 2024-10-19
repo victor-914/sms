@@ -1,5 +1,5 @@
 import express from 'express';
-import AssessingFormatsController from './assessment.controller';
+import AssessingFormatsController from './assessment.controller.js';
 
 const router = express.Router();
  const assessingFormatsController = new  AssessingFormatsController()

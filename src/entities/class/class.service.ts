@@ -1,4 +1,4 @@
-import ClassModel, { IClass } from "./class.model";
+import ClassModel, { IClass } from "./class.model.js";
 
 class ClassService {
   public async createClass(classData:any) {

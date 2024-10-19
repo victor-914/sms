@@ -1,9 +1,24 @@
-"use strict";
-// const gradeSchema = new mongoose.Schema({
-//     name: { type: String, required: true },  // e.g., "Grade 1"
-//     school: { type: mongoose.Schema.Types.ObjectId, ref: 'School', required: true },
-//     minMarks: { type: Number, required: true },
-//     maxMarks: { type: Number, required: true }
-//   });
-//   const Grade = mongoose.model('Grade', gradeSchema);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ3JhZGUubW9kZWwuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvZW50aXRpZXMvZ3JhZGUvZ3JhZGUubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDRDQUE0QztBQUM1QyxrRUFBa0U7QUFDbEUsdUZBQXVGO0FBQ3ZGLGtEQUFrRDtBQUNsRCxpREFBaUQ7QUFDakQsUUFBUTtBQUVSLHdEQUF3RCJ9
+import mongoose, { Schema } from "mongoose";
+const Grade = new Schema({
+    name: {
+        type: String,
+    },
+    symbol: {
+        type: String,
+    },
+    minNumber: {
+        type: Number,
+    },
+    maxNumber: {
+        type: Number,
+    },
+});
+// Grading Scale Schema
+const GradeFormatSchema = new Schema({
+    schoolId: { type: Schema.Types.ObjectId },
+    grade: [Grade],
+    level: { type: String }
+});
+const GradingFormat = mongoose.model("GradingFormat", GradeFormatSchema);
+export default GradingFormat;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ3JhZGUubW9kZWwuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvZW50aXRpZXMvZ3JhZGUvZ3JhZGUubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxRQUFRLEVBQUUsRUFBRSxNQUFNLEVBQVksTUFBTSxVQUFVLENBQUM7QUFTdEQsTUFBTSxLQUFLLEdBQUcsSUFBSSxNQUFNLENBQUM7SUFDdkIsSUFBSSxFQUFFO1FBQ0osSUFBSSxFQUFFLE1BQU07S0FDYjtJQUNELE1BQU0sRUFBRTtRQUNOLElBQUksRUFBRSxNQUFNO0tBQ2I7SUFDRCxTQUFTLEVBQUU7UUFDVCxJQUFJLEVBQUUsTUFBTTtLQUNiO0lBQ0QsU0FBUyxFQUFFO1FBQ1QsSUFBSSxFQUFFLE1BQU07S0FDYjtDQUNGLENBQUMsQ0FBQztBQU9ILHVCQUF1QjtBQUN2QixNQUFNLGlCQUFpQixHQUFXLElBQUksTUFBTSxDQUFDO0lBQzNDLFFBQVEsRUFBRSxFQUFFLElBQUksRUFBRSxNQUFNLENBQUMsS0FBSyxDQUFDLFFBQVEsRUFBRTtJQUN6QyxLQUFLLEVBQUUsQ0FBQyxLQUFLLENBQUM7SUFDZCxLQUFLLEVBQUUsRUFBRSxJQUFJLEVBQUUsTUFBTSxFQUFFO0NBQ3hCLENBQUMsQ0FBQztBQUVILE1BQU0sYUFBYSxHQUFHLFFBQVEsQ0FBQyxLQUFLLENBQ2xDLGVBQWUsRUFDZixpQkFBaUIsQ0FDbEIsQ0FBQztBQUNGLGVBQWUsYUFBYSxDQUFDIn0=

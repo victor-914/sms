@@ -6,7 +6,7 @@ const router = Router();
 
 const staffController = new StaffController();
 
-// router.get("/staffs", authenticationMDW, staffController.getStaffs);
+router.get("/staffs", authenticationMDW, staffController.getStaffs);
 // router.get("/staffs/:id", authenticationMDW, staffController.getStaffById);
 router.post("/staffs", authenticationMDW, authorizeRoles("admin", "principal"), staffController.createStaff);
 // router.put("/staffs/:id", authenticationMDW, staffController.updateStaff);

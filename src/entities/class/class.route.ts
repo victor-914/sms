@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import ClassController from './class.controller';
-import { authenticationMDW } from '../../middlewares/auth.middleware';
+import ClassController from './class.controller.js';
+import { authenticationMDW } from '../../middlewares/auth.middleware.js';
 
 const router = Router();
 

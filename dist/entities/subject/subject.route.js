@@ -1,0 +1,11 @@
+// src/routes/subjectRoutes.ts
+import { Router } from 'express';
+import { createSubjectController, getAllSubjectsController, getSubjectByIdController, updateSubjectController, deleteSubjectController, } from './subject.controller.js';
+const router = Router();
+router.post('/', createSubjectController);
+router.get('/', getAllSubjectsController);
+router.get('/:id', getSubjectByIdController);
+router.put('/:id', updateSubjectController);
+router.delete('/:id', deleteSubjectController);
+export default router;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3ViamVjdC5yb3V0ZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9lbnRpdGllcy9zdWJqZWN0L3N1YmplY3Qucm91dGUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsOEJBQThCO0FBQzlCLE9BQU8sRUFBRSxNQUFNLEVBQUUsTUFBTSxTQUFTLENBQUM7QUFDakMsT0FBTyxFQUNMLHVCQUF1QixFQUN2Qix3QkFBd0IsRUFDeEIsd0JBQXdCLEVBQ3hCLHVCQUF1QixFQUN2Qix1QkFBdUIsR0FDeEIsTUFBTSx5QkFBeUIsQ0FBQztBQUVqQyxNQUFNLE1BQU0sR0FBRyxNQUFNLEVBQUUsQ0FBQztBQUV4QixNQUFNLENBQUMsSUFBSSxDQUFDLEdBQUcsRUFBRSx1QkFBdUIsQ0FBQyxDQUFDO0FBQzFDLE1BQU0sQ0FBQyxHQUFHLENBQUMsR0FBRyxFQUFFLHdCQUF3QixDQUFDLENBQUM7QUFDMUMsTUFBTSxDQUFDLEdBQUcsQ0FBQyxNQUFNLEVBQUUsd0JBQXdCLENBQUMsQ0FBQztBQUM3QyxNQUFNLENBQUMsR0FBRyxDQUFDLE1BQU0sRUFBRSx1QkFBdUIsQ0FBQyxDQUFDO0FBQzVDLE1BQU0sQ0FBQyxNQUFNLENBQUMsTUFBTSxFQUFFLHVCQUF1QixDQUFDLENBQUM7QUFFL0MsZUFBZSxNQUFNLENBQUMifQ==

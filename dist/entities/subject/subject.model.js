@@ -1,8 +1,13 @@
-"use strict";
-// const subjectSchema = new mongoose.Schema({
-//     name: { type: String, required: true },
-//     school: { type: mongoose.Schema.Types.ObjectId, ref: 'School', required: true },
-//     classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Class' }]
-//   });
-//   const Subject = mongoose.model('Subject', subjectSchema);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3ViamVjdC5tb2RlbC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9lbnRpdGllcy9zdWJqZWN0L3N1YmplY3QubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLDhDQUE4QztBQUM5Qyw4Q0FBOEM7QUFDOUMsdUZBQXVGO0FBQ3ZGLHdFQUF3RTtBQUN4RSxRQUFRO0FBRVIsOERBQThEIn0=
+import mongoose from "mongoose";
+const subjectSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    schoolId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "School",
+        required: true,
+    },
+    classId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Class" }],
+});
+const Subject = mongoose.model("Subject", subjectSchema);
+export default Subject;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3ViamVjdC5tb2RlbC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9lbnRpdGllcy9zdWJqZWN0L3N1YmplY3QubW9kZWwudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxRQUFRLE1BQU0sVUFBVSxDQUFDO0FBRWhDLE1BQU0sYUFBYSxHQUFHLElBQUksUUFBUSxDQUFDLE1BQU0sQ0FBQztJQUN4QyxJQUFJLEVBQUUsRUFBRSxJQUFJLEVBQUUsTUFBTSxFQUFFLFFBQVEsRUFBRSxJQUFJLEVBQUU7SUFDdEMsUUFBUSxFQUFFO1FBQ1IsSUFBSSxFQUFFLFFBQVEsQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLFFBQVE7UUFDcEMsR0FBRyxFQUFFLFFBQVE7UUFDYixRQUFRLEVBQUUsSUFBSTtLQUNmO0lBQ0QsT0FBTyxFQUFFLENBQUMsRUFBRSxJQUFJLEVBQUUsUUFBUSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsUUFBUSxFQUFFLEdBQUcsRUFBRSxPQUFPLEVBQUUsQ0FBQztDQUNsRSxDQUFDLENBQUM7QUFFRixNQUFNLE9BQU8sR0FBRyxRQUFRLENBQUMsS0FBSyxDQUFDLFNBQVMsRUFBRSxhQUFhLENBQUMsQ0FBQztBQUd6RCxlQUFnQixPQUFPLENBQUEifQ==
