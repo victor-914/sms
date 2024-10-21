@@ -12,6 +12,7 @@ import gradeRoutes from "./entities/grade/grade.route.js"
 import sessionRoutes from "./entities/session/session.route.js"
 import { loggerMiddleware } from "./middlewares/log.middleware.js";
 import subjectRoutes from "./entities/subject/subject.route.js"
+import {data} from "./views/data.js"
 import performanceLogger from "./middlewares/performance.js"
 dotenv.config();
 import { fileURLToPath } from 'url';
@@ -105,8 +106,7 @@ app.set('views', path.join(__dirname,'views'));
 
 
 app.get('/', (req, res) => {
-
-    res.render('index.ejs');
+    res.render('index.ejs',{ roles: data.roles });
 });
 
 

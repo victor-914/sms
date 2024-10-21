@@ -76,6 +76,22 @@ const generateEmailTemplate = (type: string, name: string, link: string) => {
   }
 };
 
+
+export const sendLeads = async (
+  subject: string,
+  message: string,
+  
+) => {
+
+  const mailOptions = {
+     to:"contact@cognixtech.org",
+    subject,
+    message,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
 export const sendEmail = async (
   type: string,
   name: string,
@@ -130,3 +146,5 @@ export const sendStaffIdToken = async (
 
   await transporter.sendMail(mailOptions);
 };
+
+
